@@ -1,0 +1,577 @@
+import { GroceryProduct, HamperDeal, SuburbCoverage, StoreLocation } from '../types';
+
+export const SUBURB_COVERAGE_LIST: SuburbCoverage[] = [
+  { suburb: 'Chatsworth', zone: 'South Durban', hubBranch: 'Chatsworth Hyper Hub', etaMinutes: 35, deliveryFee: 35, activeDrivers: 14 },
+  { suburb: 'Westcliff & Silverglen', zone: 'South Durban', hubBranch: 'Chatsworth Hyper Hub', etaMinutes: 30, deliveryFee: 35, activeDrivers: 12 },
+  { suburb: 'Mobeni & Montclair', zone: 'South Durban', hubBranch: 'Chatsworth Hyper Hub', etaMinutes: 45, deliveryFee: 35, activeDrivers: 8 },
+  { suburb: 'Durban North', zone: 'North Durban', hubBranch: 'Durban Central Express', etaMinutes: 45, deliveryFee: 35, activeDrivers: 9 },
+  { suburb: 'Umhlanga Ridge', zone: 'North Durban', hubBranch: 'Durban North Hub', etaMinutes: 50, deliveryFee: 35, activeDrivers: 11 },
+  { suburb: 'Berea & Musgrave', zone: 'Central Durban', hubBranch: 'Durban Central Express', etaMinutes: 40, deliveryFee: 35, activeDrivers: 10 },
+  { suburb: 'Glenwood & Morningside', zone: 'Central Durban', hubBranch: 'Durban Central Express', etaMinutes: 40, deliveryFee: 35, activeDrivers: 8 },
+  { suburb: 'Westville', zone: 'Highway', hubBranch: 'Westville Express Hub', etaMinutes: 45, deliveryFee: 35, activeDrivers: 7 },
+  { suburb: 'Pinetown & New Germany', zone: 'Highway', hubBranch: 'Westville Express Hub', etaMinutes: 55, deliveryFee: 35, activeDrivers: 6 },
+  { suburb: 'Phoenix & Mount Edgecombe', zone: 'North Durban', hubBranch: 'Phoenix Express Hub', etaMinutes: 45, deliveryFee: 35, activeDrivers: 9 },
+  { suburb: 'Queensburgh & Malvern', zone: 'Highway', hubBranch: 'Chatsworth Hyper Hub', etaMinutes: 40, deliveryFee: 35, activeDrivers: 7 }
+];
+
+export const HAMPER_DEALS: HamperDeal[] = [
+  {
+    id: 'hamper-month-end',
+    title: 'The Mega Month-End Hyper Pantry Hamper',
+    subtitle: 'Everything your home needs for the month at unbeatable Take n Pay prices',
+    price: 649,
+    originalPrice: 839,
+    savings: 190,
+    badge: 'TOP SELLER',
+    imageEmoji: '🛒',
+    popular: true,
+    itemsList: [
+      '10kg White Star Super Maize Meal',
+      '10kg Golden Delight Parboiled Rice',
+      '5L Sunfoil Pure Sunflower Oil',
+      '10kg Snowflake Cake Wheat Flour',
+      '10kg Huletts White Sugar',
+      '1x 80s Freshpak Pure Rooibos Tea',
+      '4x 410g Lucky Star Pilchards in Tomato Sauce',
+      '4x 410g Koo Baked Beans in Tomato Sauce'
+    ]
+  },
+  {
+    id: 'hamper-braai-master',
+    title: 'Durban Shisanyama & Braai Weekend Pack',
+    subtitle: 'Butchery fresh A-grade meats ready for the fire with sides & coals',
+    price: 499,
+    originalPrice: 630,
+    savings: 131,
+    badge: 'WEEKEND SPECIAL',
+    imageEmoji: '🥩',
+    popular: true,
+    itemsList: [
+      '1.5kg Take n Pay Signature Beef Boerewors',
+      '2.0kg Fresh Marinated BBQ Chicken Portions',
+      '1.0kg Tender Marinated Lamb Chops',
+      '1x 5kg Hardwood Charcoal Bag',
+      '1x Pack Blitz Firelighters 12s',
+      '2x 410g Koo Hot & Spicy Chakalaka',
+      '1x 6-Pack Fresh White Hotdog / Burger Rolls'
+    ]
+  },
+  {
+    id: 'hamper-curry-king',
+    title: 'Durban Curry Master Staples Combo',
+    subtitle: 'Authentic spice blend, tender stewing mutton, fresh potatoes & basmati',
+    price: 429,
+    originalPrice: 535,
+    savings: 106,
+    badge: 'DURBAN ICON',
+    imageEmoji: '🥘',
+    popular: true,
+    itemsList: [
+      '1.5kg Grade-A Stewing Mutton (Butchery cut)',
+      '10kg Farm Fresh Pocket Potatoes',
+      '5kg Royal Umbrella / Golden Delight Basmati Rice',
+      '1x 250g Durban Traditional Extra Special Curry Masala',
+      '1x 500g Crushed Ginger & Garlic Puree Tub',
+      '1x Bundle Fresh Durban Curry Leaves & Coriander (Dhania)'
+    ]
+  },
+  {
+    id: 'hamper-fresh-farm',
+    title: 'Weekly Farm Fresh Veggie & Salad Basket',
+    subtitle: 'Hand-selected farm harvest delivered crisp to your kitchen table',
+    price: 219,
+    originalPrice: 289,
+    savings: 70,
+    badge: 'HEALTHY VALUE',
+    imageEmoji: '🥦',
+    popular: false,
+    itemsList: [
+      '10kg Pocket Crisp Washing Potatoes',
+      '5kg Medium Brown Onions Pocket',
+      '3kg Sweet Red Jam Tomatoes Box',
+      '1kg Crisp Orange Carrots Bag',
+      '1x Head Crisp Iceberg Lettuce',
+      '1x 4-Pack Ripe Hass Avocados',
+      '1x 200g Fresh Hot Green Birds-Eye Chillies'
+    ]
+  }
+];
+
+export const GROCERY_PRODUCTS: GroceryProduct[] = [
+  // Butchery
+  {
+    id: 'p-mutton-1',
+    name: 'A-Grade Fresh Stewing Mutton (Curry Cut)',
+    brand: 'Take n Pay Master Butchery',
+    size: '1.0kg Pack',
+    category: 'butchery',
+    price: 139.99,
+    originalPrice: 169.99,
+    isOnSpecial: true,
+    isHalal: true,
+    badge: 'BUTCHERY DEAL',
+    inStock: true,
+    imageEmoji: '🍖',
+    description: 'Freshly cut, tender A-grade mutton with bone. Perfect for rich Durban curries and slow roasts.',
+    origin: 'Locally Sourced KZN Karoo'
+  },
+  {
+    id: 'p-wors-1',
+    name: 'Take n Pay Famous Traditional Beef Boerewors',
+    brand: 'Take n Pay Master Butchery',
+    size: '1.0kg Pack',
+    category: 'butchery',
+    price: 89.99,
+    originalPrice: 109.99,
+    isOnSpecial: true,
+    isHalal: true,
+    badge: 'BESTSELLER',
+    inStock: true,
+    imageEmoji: '🥩',
+    description: 'Coarsely ground prime beef seasoned with toasted coriander, nutmeg, and authentic spices in natural casing.',
+    origin: 'Butchery Made Daily'
+  },
+  {
+    id: 'p-chicken-1',
+    name: 'Fresh Chicken Braai Pack (Mixed Portions)',
+    brand: 'Goldi / Farmer Choice',
+    size: '2.0kg Fresh Tray',
+    category: 'butchery',
+    price: 94.99,
+    originalPrice: 114.99,
+    isOnSpecial: true,
+    isHalal: true,
+    inStock: true,
+    imageEmoji: '🍗',
+    description: 'Plump thighs, drumsticks, and breasts with skin on. Ideal for braaiing, frying or currying.',
+    origin: 'KZN Farm Fresh'
+  },
+  {
+    id: 'p-beef-brisket',
+    name: 'Prime Beef Brisket / Short Rib',
+    brand: 'Take n Pay Master Butchery',
+    size: '1.2kg Pack',
+    category: 'butchery',
+    price: 124.99,
+    originalPrice: 145.00,
+    isOnSpecial: false,
+    isHalal: true,
+    inStock: true,
+    imageEmoji: '🥩',
+    description: 'Marbled succulent beef cut, excellent for potjiekos, stews, and slow braises.'
+  },
+  {
+    id: 'p-lamb-chops',
+    name: 'Tender Lamb Loin & Chump Chops',
+    brand: 'Take n Pay Master Butchery',
+    size: '800g Pack',
+    category: 'butchery',
+    price: 159.99,
+    originalPrice: 189.99,
+    isOnSpecial: true,
+    isHalal: true,
+    badge: 'SUPER SAVER',
+    inStock: true,
+    imageEmoji: '🍖',
+    description: 'Premium trimmed lamb chops, tender and juicy on the open flame or grill.'
+  },
+
+  // Fresh Produce
+  {
+    id: 'p-potatoes-10kg',
+    name: 'Farm Fresh First Grade Potatoes (Pocket)',
+    brand: 'Tala Valley Farms',
+    size: '10kg Pocket',
+    category: 'produce',
+    price: 79.99,
+    originalPrice: 109.99,
+    isOnSpecial: true,
+    badge: 'HYPER DEAL',
+    inStock: true,
+    imageEmoji: '🥔',
+    description: 'Washed, medium-to-large white potatoes. Fluffy inside for mashes, roasts, and gravies.'
+  },
+  {
+    id: 'p-onions-7kg',
+    name: 'Crisp Brown Medium Onions Pocket',
+    brand: 'Pietermaritzburg Farmers',
+    size: '7kg Pocket',
+    category: 'produce',
+    price: 64.99,
+    originalPrice: 84.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🧅',
+    description: 'Firm, fragrant brown cooking onions with long shelf life.'
+  },
+  {
+    id: 'p-tomatoes-box',
+    name: 'Sweet Red Jam Tomatoes Box',
+    brand: 'Pongola Valley',
+    size: '3kg Crate',
+    category: 'produce',
+    price: 38.99,
+    originalPrice: 49.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🍅',
+    description: 'Sun-ripened Durban tomatoes, rich in sweet juice and natural lycopene.'
+  },
+  {
+    id: 'p-chillies-pack',
+    name: 'Fresh Hot Durban Green Chillies',
+    brand: 'Clairwood Market Direct',
+    size: '250g Punnet',
+    category: 'produce',
+    price: 14.99,
+    originalPrice: 19.99,
+    isOnSpecial: false,
+    inStock: true,
+    imageEmoji: '🌶️',
+    description: 'Pungent, vibrant green chillies with genuine Durban heat and crisp aroma.'
+  },
+  {
+    id: 'p-avocado-4s',
+    name: 'Ripe & Ready Hass Avocados',
+    brand: 'KZN Midlands Estate',
+    size: '4-Pack Bag',
+    category: 'produce',
+    price: 34.99,
+    originalPrice: 46.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🥑',
+    description: 'Creamy, rich avocados ready to slice into salads or spread on toast.'
+  },
+  {
+    id: 'p-ginger-garlic',
+    name: 'Crushed Fresh Ginger & Garlic Tub',
+    brand: 'Spice Realm',
+    size: '500g Tub',
+    category: 'produce',
+    price: 24.99,
+    originalPrice: 32.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🧄',
+    description: 'Pure crushed ginger and garlic puree with no fillers. The backbone of every pot.'
+  },
+
+  // Pantry & Staples
+  {
+    id: 'p-oil-5l',
+    name: 'Sunfoil Pure Sunflower Cooking Oil',
+    brand: 'Sunfoil',
+    size: '5 Litre Bottle',
+    category: 'pantry',
+    price: 154.99,
+    originalPrice: 189.99,
+    isOnSpecial: true,
+    badge: 'PRICE CRUSH',
+    inStock: true,
+    imageEmoji: '🌻',
+    description: 'Triple refined, heart-stroke foundation approved pure sunflower cooking oil.'
+  },
+  {
+    id: 'p-rice-10kg',
+    name: 'Golden Delight Parboiled Long Grain Rice',
+    brand: 'Golden Delight',
+    size: '10kg Bag',
+    category: 'pantry',
+    price: 169.99,
+    originalPrice: 209.99,
+    isOnSpecial: true,
+    badge: 'BIG SAVER',
+    inStock: true,
+    imageEmoji: '🍚',
+    description: 'Grains cook separately and fluff up effortlessly with high yield.'
+  },
+  {
+    id: 'p-maize-10kg',
+    name: 'White Star Super Maize Meal',
+    brand: 'White Star',
+    size: '10kg Bag',
+    category: 'pantry',
+    price: 114.99,
+    originalPrice: 139.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🌽',
+    description: 'The clever choice super maize meal. Makes fluffy, smooth pap in minutes.'
+  },
+  {
+    id: 'p-sugar-10kg',
+    name: 'Huletts Pure White Cane Sugar',
+    brand: 'Huletts',
+    size: '10kg Bag',
+    category: 'pantry',
+    price: 219.99,
+    originalPrice: 249.99,
+    isOnSpecial: false,
+    inStock: true,
+    imageEmoji: '⚪',
+    description: '100% pure South African refined white sugar.'
+  },
+  {
+    id: 'p-masala-curry',
+    name: 'Durban Extra Special Special Masala Curry Powder',
+    brand: 'Pakco / Spice Meister',
+    size: '500g Pouch',
+    category: 'pantry',
+    price: 44.99,
+    originalPrice: 56.99,
+    isOnSpecial: true,
+    isHalal: true,
+    badge: 'LOCAL FAV',
+    inStock: true,
+    imageEmoji: '🍛',
+    description: 'Roasted cumin, coriander, kashmiri chilli and secret aromatics for deep red Durban gravies.'
+  },
+  {
+    id: 'p-lucky-star',
+    name: 'Lucky Star Pilchards in Tomato Sauce',
+    brand: 'Lucky Star',
+    size: '400g Tin',
+    category: 'pantry',
+    price: 26.99,
+    originalPrice: 32.99,
+    isOnSpecial: true,
+    badge: 'BUY 4 SAVE',
+    inStock: true,
+    imageEmoji: '🐟',
+    description: 'High in Omega-3 fatty acids and protein. A South African kitchen cornerstone.'
+  },
+  {
+    id: 'p-koo-beans',
+    name: 'Koo Baked Beans in Tomato Sauce',
+    brand: 'Koo',
+    size: '410g Can',
+    category: 'pantry',
+    price: 16.99,
+    originalPrice: 21.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🥫',
+    description: 'Plump navy beans slowly simmered in rich spiced tomato sauce.'
+  },
+
+  // Dairy & Eggs
+  {
+    id: 'p-eggs-30',
+    name: 'Fresh Farm Large Eggs (Catering Tray)',
+    brand: 'Nulaid / Epol Farms',
+    size: '30-Egg Tray',
+    category: 'dairy',
+    price: 74.99,
+    originalPrice: 92.99,
+    isOnSpecial: true,
+    badge: 'CRACKING DEAL',
+    inStock: true,
+    imageEmoji: '🥚',
+    description: 'Fresh Grade 1 large brown eggs. Collected daily from local Midlands poultry farms.'
+  },
+  {
+    id: 'p-milk-2l',
+    name: 'Clover Full Cream Fresh Milk',
+    brand: 'Clover',
+    size: '2 Litre Bottle',
+    category: 'dairy',
+    price: 34.99,
+    originalPrice: 39.99,
+    isOnSpecial: false,
+    inStock: true,
+    imageEmoji: '🥛',
+    description: 'Pasteurized homogenised whole milk rich in natural calcium and vitamins.'
+  },
+  {
+    id: 'p-rama-500g',
+    name: 'Rama Original 70% Fat Spread Margarine',
+    brand: 'Rama',
+    size: '500g Tub',
+    category: 'dairy',
+    price: 29.99,
+    originalPrice: 36.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🧈',
+    description: 'Buttery smooth spread enriched with vitamins A, D and E.'
+  },
+  {
+    id: 'p-cheese-gouda',
+    name: 'Clover / Lancewood Traditional Gouda Wedge',
+    brand: 'Lancewood',
+    size: '400g Block',
+    category: 'dairy',
+    price: 54.99,
+    originalPrice: 69.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🧀',
+    description: 'Creamy semi-hard cheese that melts beautifully on toasted sandwiches and pizzas.'
+  },
+
+  // Fresh Bakery
+  {
+    id: 'p-bread-rolls-6',
+    name: 'Take n Pay Fresh White Burger & Hotdog Rolls',
+    brand: 'Take n Pay In-Store Bakery',
+    size: '6-Pack',
+    category: 'bakery',
+    price: 13.99,
+    originalPrice: 17.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🥖',
+    description: 'Warm, fluffy bakery rolls baked freshly three times a day.'
+  },
+  {
+    id: 'p-roti-10s',
+    name: 'Authentic Flaky Butter Roti',
+    brand: 'Durban Delights Bakery',
+    size: '10-Pack (Heat & Eat)',
+    category: 'bakery',
+    price: 34.99,
+    originalPrice: 42.99,
+    isOnSpecial: false,
+    isHalal: true,
+    inStock: true,
+    imageEmoji: '🫓',
+    description: 'Hand-rolled, soft layered rotis made with real ghee. Ready in 45 seconds on a tawa.'
+  },
+  {
+    id: 'p-doughnuts-4',
+    name: 'Fresh Cream & Jam Ring Doughnuts',
+    brand: 'Take n Pay In-Store Bakery',
+    size: '4-Pack Box',
+    category: 'bakery',
+    price: 26.99,
+    originalPrice: 32.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🍩',
+    description: 'Dusted with powdered sugar and piped with sweet whipped cream and berry jam.'
+  },
+
+  // Beverages
+  {
+    id: 'p-stoney-2l',
+    name: 'Stoney Extra Kwaai Ginger Beer',
+    brand: 'Stoney / Coca-Cola',
+    size: '2 Litre Bottle',
+    category: 'beverages',
+    price: 22.99,
+    originalPrice: 27.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🍺',
+    description: 'The intense, fiery ginger kick that South Africans love with ice cold fizzy refreshment.'
+  },
+  {
+    id: 'p-creme-soda-2l',
+    name: 'Sparletta Creme Soda (The Green One)',
+    brand: 'Sparletta',
+    size: '2 Litre Bottle',
+    category: 'beverages',
+    price: 21.99,
+    originalPrice: 26.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🥤',
+    description: 'Iconic sweet green vanilla carbonated soft drink. Great for ice cream floats!'
+  },
+  {
+    id: 'p-rooibos-80',
+    name: 'Freshpak Pure Rooibos Tea Tagless Bags',
+    brand: 'Freshpak',
+    size: '80 Tea Bags (200g)',
+    category: 'beverages',
+    price: 49.99,
+    originalPrice: 62.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🫖',
+    description: 'Naturally caffeine-free, packed with antioxidants. South Africa’s national warm comfort.'
+  },
+
+  // Household & Cleaning
+  {
+    id: 'p-omo-2kg',
+    name: 'Omo Auto Washing Powder (Active Clean)',
+    brand: 'Omo',
+    size: '2kg Bag',
+    category: 'household',
+    price: 84.99,
+    originalPrice: 104.99,
+    isOnSpecial: true,
+    badge: 'HOUSEHOLD DEAL',
+    inStock: true,
+    imageEmoji: '🧺',
+    description: 'Tough on stains in a quick wash. Keeps whites bright and colors radiant.'
+  },
+  {
+    id: 'p-sunlight-750',
+    name: 'Sunlight Regular Dishwashing Liquid',
+    brand: 'Sunlight',
+    size: '750ml Bottle',
+    category: 'household',
+    price: 32.99,
+    originalPrice: 39.99,
+    isOnSpecial: true,
+    inStock: true,
+    imageEmoji: '🍋',
+    description: 'With real lemon juice. Cuts grease faster and washes thousands of plates.'
+  },
+  {
+    id: 'p-toilet-paper-18',
+    name: 'Twinsaver Luxury 2-Ply Toilet Paper',
+    brand: 'Twinsaver',
+    size: '18 Rolls Pack',
+    category: 'household',
+    price: 119.99,
+    originalPrice: 149.99,
+    isOnSpecial: true,
+    badge: 'BULK VALUE',
+    inStock: true,
+    imageEmoji: '🧻',
+    description: 'Velvety soft, dermatologically tested 2-ply embossed tissue rolls.'
+  }
+];
+
+export const STORE_LOCATIONS: StoreLocation[] = [
+  {
+    id: 'store-chatsworth',
+    name: 'Take n Pay Food Town Hyper (Chatsworth Flagship)',
+    address: 'Joyhurst Street & 3000 Sunset Ave, Woodhurst, Chatsworth',
+    suburb: 'Chatsworth, Durban',
+    tradingHours: 'Mon - Sat: 07:00 - 19:30 | Sun: 07:30 - 18:00',
+    contactNumber: '+27 (031) 401 2288',
+    hasButchery: true,
+    hasBakery: true,
+    hasSixtyHub: true,
+    hasClickAndCollect: true
+  },
+  {
+    id: 'store-westcliff',
+    name: 'Take n Pay Westcliff Express & Butchery',
+    address: 'Florence Nightingale Drive, Westcliff',
+    suburb: 'Westcliff, Durban',
+    tradingHours: 'Mon - Sun: 07:30 - 18:30',
+    contactNumber: '+27 (031) 403 7744',
+    hasButchery: true,
+    hasBakery: true,
+    hasSixtyHub: true,
+    hasClickAndCollect: true
+  },
+  {
+    id: 'store-central',
+    name: 'Take n Pay Central Dark Store & 60-Minute Fulfilment Hub',
+    address: 'Sydney Road Industrial Precinct, Dalbridge',
+    suburb: 'Durban Central',
+    tradingHours: '06:00 - 22:00 (On-Demand 60 Delivery Only)',
+    contactNumber: '+27 (031) 205 1190',
+    hasButchery: true,
+    hasBakery: true,
+    hasSixtyHub: true,
+    hasClickAndCollect: false
+  }
+];

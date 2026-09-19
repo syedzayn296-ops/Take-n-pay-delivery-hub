@@ -1,0 +1,6 @@
+{
+  "name": "Take n Pay 60 | Durban On-Demand Grocery Delivery",
+  "description": "Durban's favorite supermarket online. Shop fresh produce, butchery, pantry staples and bulk hyper deals delivered to your door in 60 minutes.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
