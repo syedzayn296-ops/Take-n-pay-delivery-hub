@@ -13,6 +13,7 @@ type CartItem = Product & { qty: number };
 type Order = {
   id: string; customer: string; suburb: string; store: string; items: number;
   value: number; status: Status; eta: string; driver?: string; note?: string;
+  fulfillment?: 'Delivery' | 'Collection'; itemSummary?: string;
 };
 
 const products: Product[] = [
@@ -27,12 +28,12 @@ const products: Product[] = [
 ];
 
 const initialOrders: Order[] = [
-  { id: 'TNP-1042', customer: 'Customer A', suburb: 'Chatsworth', store: 'Chatsworth', items: 8, value: 684.50, status: 'New', eta: '—' },
-  { id: 'TNP-1041', customer: 'Customer B', suburb: 'Malvern', store: 'Chatsworth', items: 12, value: 923.20, status: 'Picking', eta: '—' },
-  { id: 'TNP-1039', customer: 'Customer C', suburb: 'Queensburgh', store: 'Chatsworth', items: 6, value: 412.00, status: 'Ready', eta: '35 min' },
-  { id: 'TNP-1037', customer: 'Customer D', suburb: 'Amanzimtoti', store: 'Amanzimtoti', items: 15, value: 1188.90, status: 'Assigned', eta: '42 min', driver: 'Driver 01' },
-  { id: 'TNP-1035', customer: 'Customer E', suburb: 'Isipingo', store: 'Amanzimtoti', items: 9, value: 576.40, status: 'Out for delivery', eta: '18 min', driver: 'Driver 02' },
-  { id: 'TNP-1031', customer: 'Customer F', suburb: 'Chatsworth', store: 'Chatsworth', items: 11, value: 745.80, status: 'Problem', eta: 'Delayed', driver: 'Driver 03', note: 'Customer unavailable — call required' }
+  { id: 'TNP-1042', customer: 'Customer A', suburb: 'Chatsworth', store: 'Chatsworth', items: 8, value: 684.50, status: 'New', eta: '—', fulfillment: 'Delivery', itemSummary: 'Mixed grocery basket' },
+  { id: 'TNP-1041', customer: 'Customer B', suburb: 'Malvern', store: 'Chatsworth', items: 12, value: 923.20, status: 'Picking', eta: '—', fulfillment: 'Delivery', itemSummary: '12 grocery items' },
+  { id: 'TNP-1039', customer: 'Customer C', suburb: 'Queensburgh', store: 'Chatsworth', items: 6, value: 412.00, status: 'Ready', eta: '35 min', fulfillment: 'Delivery', itemSummary: '6 grocery items' },
+  { id: 'TNP-1037', customer: 'Customer D', suburb: 'Amanzimtoti', store: 'Amanzimtoti', items: 15, value: 1188.90, status: 'Assigned', eta: '42 min', driver: 'Driver 01', fulfillment: 'Delivery', itemSummary: '15 grocery items' },
+  { id: 'TNP-1035', customer: 'Customer E', suburb: 'Isipingo', store: 'Amanzimtoti', items: 9, value: 576.40, status: 'Out for delivery', eta: '18 min', driver: 'Driver 02', fulfillment: 'Delivery', itemSummary: '9 grocery items' },
+  { id: 'TNP-1031', customer: 'Customer F', suburb: 'Chatsworth', store: 'Chatsworth', items: 11, value: 745.80, status: 'Problem', eta: 'Delayed', driver: 'Driver 03', fulfillment: 'Delivery', itemSummary: '11 grocery items', note: 'Customer unavailable — call required' }
 ];
 
 const nextStatus: Partial<Record<Status, Status>> = {
@@ -88,7 +89,8 @@ export default function App() {
     const id = 'TNP-' + (1043 + orders.length);
     const order: Order = {
       id, customer: 'Demo Customer', suburb: delivery === 'Delivery' ? 'Isipingo' : store,
-      store, items: cartCount, value: cartTotal, status: 'New', eta: delivery === 'Delivery' ? '45–60 min' : 'Ready notification'
+      store, items: cartCount, value: cartTotal, status: 'New', eta: delivery === 'Delivery' ? '45–60 min' : 'Ready notification', fulfillment: delivery,
+      itemSummary: cart.map(item => `${item.qty}× ${item.name}`).join(' · ')
     };
     setOrders(current => [order, ...current]);
     setPlaced(id);
@@ -161,7 +163,7 @@ export default function App() {
       {mode === 'Dispatch' && <Dispatch orders={orders} setOrders={setOrders} selected={selected} setSelected={setSelected} />}
       {mode === 'Management' && <Management orders={orders} counts={counts} />}
 
-      {placed && <div className="fixed inset-0 z-50 bg-slate-950/50 p-4" onClick={() => setPlaced(null)}><div className="mx-auto mt-20 max-w-md rounded-2xl bg-white p-6 shadow-2xl" onClick={e => e.stopPropagation()}><CheckCircle2 className="h-10 w-10 text-emerald-600" /><h2 className="mt-3 text-2xl font-black">Order received</h2><p className="mt-2 text-sm text-slate-600">Demo order <b>{placed}</b> has entered the Take N Pay fulfilment workflow.</p><button onClick={() => { setPlaced(null); setMode('Store'); }} className="mt-5 w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white">Show store order</button></div></div>}
+      {placed && <div className="fixed inset-0 z-50 bg-slate-950/50 p-4" onClick={() => setPlaced(null)}><div className="mx-auto mt-20 max-w-md rounded-2xl bg-white p-6 shadow-2xl" onClick={e => e.stopPropagation()}><CheckCircle2 className="h-10 w-10 text-emerald-600" /><h2 className="mt-3 text-2xl font-black">Order received</h2><p className="mt-2 text-sm text-slate-600">Demo order <b>{placed}</b> has entered the Take N Pay fulfilment workflow. Nothing is connected to live Take N Pay systems.</p><button onClick={() => { setPlaced(null); setMode('Store'); }} className="mt-5 w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white">Show store order</button></div></div>}
     </div>
   );
 }
@@ -171,7 +173,7 @@ function Operations({ title, subtitle, orders, store, setStore, selected, setSel
   return <main className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6">
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-2xl font-black">{title}</h2><p className="text-sm text-slate-500">{subtitle}</p></div><select value={store} onChange={(e: any) => setStore(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold"><option>All stores</option><option>Chatsworth</option><option>Amanzimtoti</option><option>Arbour Town</option></select></div>
     <div className="grid grid-cols-3 gap-3"><Metric icon={<Package />} label="New" value={counts.new} /><Metric icon={<ClipboardCheck />} label="Picking / packed" value={counts.picking} /><Metric icon={<CheckCircle2 />} label="Ready" value={counts.ready} /></div>
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div className="border-b px-4 py-4"><h3 className="font-black">Store order queue</h3></div>{orders.map((order: Order) => <button key={order.id} onClick={() => setSelected(order)} className="block w-full border-b px-4 py-4 text-left last:border-0 hover:bg-slate-50"><div className="grid gap-2 sm:grid-cols-[120px_1fr_auto] sm:items-center"><div><b>{order.id}</b><p className="text-xs text-slate-500">{order.items} items · R{order.value.toFixed(2)}</p></div><div><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${statusStyle[order.status]}`}>{order.status}</span><p className="mt-1 text-xs text-slate-500">{order.customer} · {order.suburb}</p></div><ChevronRight className="hidden h-5 w-5 text-slate-300 sm:block" /></div></button>)}</div>
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div className="border-b px-4 py-4"><h3 className="font-black">Store order queue</h3></div>{orders.map((order: Order) => <button key={order.id} onClick={() => setSelected(order)} className="block w-full border-b px-4 py-4 text-left last:border-0 hover:bg-slate-50"><div className="grid gap-2 sm:grid-cols-[120px_1fr_auto] sm:items-center"><div><b>{order.id}</b><p className="text-xs text-slate-500">{order.items} items · R{order.value.toFixed(2)}</p></div><div><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${statusStyle[order.status]}`}>{order.status}</span><p className="mt-1 text-xs text-slate-500">{order.customer} · {order.suburb} · {order.fulfillment || 'Delivery'}</p></div><ChevronRight className="hidden h-5 w-5 text-slate-300 sm:block" /></div></button>)}</div>
     {selected && <OrderModal order={selected} close={() => setSelected(null)} advance={advance} />}
   </main>;
 }
@@ -199,7 +201,7 @@ function Management({ orders, counts }: { orders: Order[]; counts: any }) {
 
 function OrderModal({ order, close, advance }: { order: Order; close: () => void; advance: (id: string) => void }) {
   const next = nextStatus[order.status];
-  return <div className="fixed inset-0 z-50 bg-slate-950/50 p-4" onClick={close}><div className="mx-auto mt-10 max-w-lg rounded-2xl bg-white p-5 shadow-2xl" onClick={e => e.stopPropagation()}><div className="flex items-start justify-between"><div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Order</p><h2 className="text-2xl font-black">{order.id}</h2></div><button onClick={close}><X /></button></div><div className="mt-5 space-y-3"><Detail icon={<UserRound />} label="Customer" value={order.customer} /><Detail icon={<MapPin />} label="Route" value={`${order.store} → ${order.suburb}`} /><Detail icon={<Package />} label="Order" value={`${order.items} items · R${order.value.toFixed(2)}`} /><Detail icon={<Clock3 />} label="ETA" value={order.eta} />{order.driver && <Detail icon={<Truck />} label="Driver" value={order.driver} />}</div>{next && <button onClick={() => { advance(order.id); close(); }} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white">Move to {next}</button>}{order.status === 'Problem' && <button onClick={() => { advance(order.id); close(); }} className="mt-3 w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-black text-white">Resolve problem</button>}</div></div>;
+  return <div className="fixed inset-0 z-50 bg-slate-950/50 p-4" onClick={close}><div className="mx-auto mt-10 max-w-lg rounded-2xl bg-white p-5 shadow-2xl" onClick={e => e.stopPropagation()}><div className="flex items-start justify-between"><div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Order</p><h2 className="text-2xl font-black">{order.id}</h2></div><button onClick={close}><X /></button></div><div className="mt-5 space-y-3"><Detail icon={<UserRound />} label="Customer" value={order.customer} /><Detail icon={<MapPin />} label="Route" value={`${order.store} → ${order.suburb}`} /><Detail icon={<Package />} label="Order" value={`${order.items} items · R${order.value.toFixed(2)}`} />{order.itemSummary && <Detail icon={<ShoppingCart />} label="Basket" value={order.itemSummary} />}<Detail icon={<Smartphone />} label="Fulfilment" value={order.fulfillment || 'Delivery'} /><Detail icon={<Clock3 />} label="ETA" value={order.eta} />{order.driver && <Detail icon={<Truck />} label="Driver" value={order.driver} />}</div>{next && <button onClick={() => { advance(order.id); close(); }} className="mt-6 w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white">Move to {next}</button>}{order.status === 'Problem' && <button onClick={() => { advance(order.id); close(); }} className="mt-3 w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-black text-white">Resolve problem</button>}</div></div>;
 }
 
 function Metric({ icon, label, value, prefix = '' }: { icon: React.ReactNode; label: string; value: number; prefix?: string }) {
